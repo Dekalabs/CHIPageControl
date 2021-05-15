@@ -80,6 +80,24 @@ import UIKit
             setNeedsLayout()
         }
     }
+
+    @IBInspectable open var borderColor: UIColor? {
+        didSet {
+            setNeedsLayout()
+        }
+    }
+
+    @IBInspectable open var currentPageBorderWidth: CGFloat = 0 {
+        didSet {
+            setNeedsLayout()
+        }
+    }
+
+    @IBInspectable open var currentPageBorderColor: UIColor? {
+        didSet {
+            setNeedsLayout()
+        }
+    }
     
     override open var tintColor: UIColor! {
         didSet {

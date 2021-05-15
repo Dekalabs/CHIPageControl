@@ -72,7 +72,7 @@ open class CHIPageControlPaprika: CHIBasePageControl {
             layer.backgroundColor = self.tintColor(position: index).withAlphaComponent(self.inactiveTransparency).cgColor
             if self.borderWidth > 0 {
                 layer.borderWidth = self.borderWidth
-                layer.borderColor = self.tintColor(position: index).cgColor
+                layer.borderColor = (self.borderColor ?? self.tintColor(position: index)).cgColor
             }
             layer.cornerRadius = self.radius
             layer.frame = frame
@@ -81,7 +81,11 @@ open class CHIPageControlPaprika: CHIBasePageControl {
 
         if let active = elements.first {
             active.backgroundColor = (self.currentPageTintColor ?? self.tintColor)?.cgColor
-            active.borderWidth = 0
+            active.borderWidth = currentPageBorderWidth
+
+            if active.borderWidth > 0 {
+                active.borderColor = currentPageBorderColor?.cgColor
+            }
         }
         
         min = elements.first?.frame
@@ -139,9 +143,9 @@ open class CHIPageControlPaprika: CHIBasePageControl {
         guard frames.indices.contains(page), frames.indices.contains(page + 1) else { return }
         
         let prev = frames[page]
-        let prevColor = tintColor(position: page)
+        let prevColor = borderColor ?? tintColor(position: page)
         let current = frames[page + 1]
-        let currentColor = tintColor(position: page + 1)
+        let currentColor = borderColor ?? tintColor(position: page + 1)
         
         let elementTotal: CGFloat = current.origin.x - prev.origin.x
         let elementProgress: CGFloat = current.origin.x - active.frame.origin.x
